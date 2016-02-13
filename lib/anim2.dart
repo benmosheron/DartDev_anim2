@@ -9,4 +9,5 @@ library anim2;
 // TODO: Export any libraries intended for clients of this package.
 
 export 'src/anim_object.dart';
+export 'src/animation.dart';
 export 'src/controller.dart';
