@@ -12,10 +12,13 @@ class Controller{
   final CanvasElement canvas;
   CanvasRenderingContext2D ctx;
 
+  /// Objects controlled by the controller
   final List<AnimObject> objects = new List<AnimObject>();
 
+  /// Animations controlled by the controller
   final List<Anim> animations = new List<Anim>();
 
+  /// Animations currently running
   List<Anim> get activeAnimations => animations.where((anim) => anim.active);
 
   // Constructors
@@ -30,11 +33,13 @@ class Controller{
     animations.removeWhere((anim) => anim.finished);
   }
 
+  /// Render all objects
   render(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     objects.forEach((a) => a.render(ctx));
   }
 
+  // Update the queue
   _queue(){
     if(animations.isEmpty)
       return;
@@ -46,8 +51,14 @@ class Controller{
     }
   }
 
+  /// Queue an animation to take place
   queueAnimation(Anim animation){
     animation.queued = true;
+    animations.add(animation);
+  }
+
+  /// Start an animation immediately, compounded with any existing animations of the target object
+  compoundAnimation(Anim animation){
     animations.add(animation);
   }
 }
