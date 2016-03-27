@@ -1,5 +1,6 @@
 library anim2.controller;
 
+import 'dart:async';
 import 'dart:collection';
 import 'dart:html';
 
@@ -11,7 +12,12 @@ class Controller{
 
   /// The controlled canvas
   final CanvasElement canvas;
+
+  /// Rendering context of the canvas
   CanvasRenderingContext2D ctx;
+
+  /// Framerate with which to update and render the canvas
+  Duration fps;
 
   /// Objects controlled by the controller
   final LinkedHashMap<String, AnimObject> objects = new LinkedHashMap<String, AnimObject>();
@@ -23,11 +29,20 @@ class Controller{
   List<Anim> get activeAnimations => animations.where((anim) => anim.active);
 
   // Constructors
-  Controller(this.canvas){
+  Controller(this.canvas, this.fps){
     ctx = canvas.getContext('2d');
+    new Timer.periodic(fps, (t) => onTick());
   }
 
   // Methods
+
+  /// Run every frame
+  void onTick(){
+    update();
+    render();
+  }
+
+  /// Proceed with the next step of every active animation
   update(){
     _queue();
     activeAnimations.forEach((anim) => anim.run());
@@ -62,7 +77,6 @@ class Controller{
       animations[0].deQueue();
     }
   }
-
 
   /// Start an animation immediately, compounded with any existing animations of the target object
   compoundAnimation(Anim animation){
