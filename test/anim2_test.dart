@@ -3,19 +3,23 @@
 
 library anim2.test;
 
+import 'dart:html';
+
 import 'package:anim2/anim2.dart';
 import 'package:test/test.dart';
 
 void main() {
-  group('A group of tests', () {
-    Awesome awesome;
+  group('Animation Tests', () {
+    Controller controller;
 
     setUp(() {
-      awesome = new Awesome();
+      controller = new Controller(new CanvasElement());
+
     });
 
-    test('First Test', () {
-      expect(awesome.isAwesome, isTrue);
+    test('Test single animation', () {
+      controller.update();
+      // expect(awesome.isAwesome, isTrue);
     });
   });
 }

@@ -1,5 +1,6 @@
 library anim2.controller;
 
+import 'dart:collection';
 import 'dart:html';
 
 import 'anim_object.dart';
@@ -13,7 +14,7 @@ class Controller{
   CanvasRenderingContext2D ctx;
 
   /// Objects controlled by the controller
-  final List<AnimObject> objects = new List<AnimObject>();
+  final LinkedHashMap<String, AnimObject> objects = new LinkedHashMap<String, AnimObject>();
 
   /// Animations controlled by the controller
   final List<Anim> animations = new List<Anim>();
@@ -36,10 +37,21 @@ class Controller{
   /// Render all objects
   render(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    objects.forEach((a) => a.render(ctx));
+    objects.forEach((k, a) => a.render(ctx));
   }
 
-  // Update the queue
+  /// Register an animation object with the controller
+  registerObject(AnimObject o){
+    objects[o.id] = o;
+  }
+
+  /// Queue an animation to take place
+  queueAnimation(Anim animation){
+    animation.queued = true;
+    animations.add(animation);
+  }
+
+  /// Update the queue
   _queue(){
     if(animations.isEmpty)
       return;
@@ -51,11 +63,6 @@ class Controller{
     }
   }
 
-  /// Queue an animation to take place
-  queueAnimation(Anim animation){
-    animation.queued = true;
-    animations.add(animation);
-  }
 
   /// Start an animation immediately, compounded with any existing animations of the target object
   compoundAnimation(Anim animation){
