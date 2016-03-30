@@ -1,19 +1,26 @@
-library anim2.anim;
+library anim2.anim_move_to;
 
 import 'package:generic_vector_tools/generic_vector_tools.dart';
 
+import 'animation_base.dart';
 import 'anim_object.dart';
+import 'colour.dart';
+import 'colour_object.dart';
 
-/// Represents an in progress animation of an AnimObject.
-class Anim{
+/// Represents an animation of an AnimObject moving to a new location.
+class AnimMoveTo implements AnimationBase{
   // Note: shortened name prevents clash with html Animation class.
   AnimObject target;
-  V2 startPosition;
-  V2 endPosition;
   int frameDuration;
 
+  V2 startPosition;
+  V2 endPosition;
   V2 _d;
+
   int currentFrame = 0;
+
+  /// Is animation queued
+  bool queued;
 
   /// True if animation is finished
   bool get finished => currentFrame == frameDuration;
@@ -21,10 +28,12 @@ class Anim{
   /// True if animation is currently running
   bool get active => !(finished || queued);
 
-  /// Is animation queued (due to run)
-  bool queued;
+  String get description => "Moving ${target.id} ($currentFrame / $frameDuration)";
 
-  Anim.moveTo(AnimObject target, V2 p, int frames){
+  AnimMoveTo(AnimObject target, V2 p, int frames){
+    if(frames <= 0)
+      frames = 1;
+
     this.target = target;
     startPosition = target.position;
     endPosition = p;
@@ -47,8 +56,7 @@ class Anim{
     if(finished)
       return;
 
-
-    target.position += _d;
+    target.position += _d;    
 
     currentFrame++;
   }

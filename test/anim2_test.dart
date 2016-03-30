@@ -13,8 +13,7 @@ void main() {
     Controller controller;
 
     setUp(() {
-      controller = new Controller(new CanvasElement());
-
+      controller = new Controller(new CanvasElement(), new Duration(milliseconds: 16));
     });
 
     test('Test single animation', () {

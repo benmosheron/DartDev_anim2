@@ -9,6 +9,8 @@ library anim2;
 // TODO: Export any libraries intended for clients of this package.
 
 export 'src/anim_object.dart';
-export 'src/anim.dart';
+export 'src/anim_move_to.dart';
+export 'src/anim_change_colour.dart';
 export 'src/controller.dart';
 export 'src/colour.dart';
+export 'src/colour_object.dart';

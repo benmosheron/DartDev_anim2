@@ -3,7 +3,7 @@ library anim2.colour;
 import 'dart:math' as math;
 
 class Colour{
-  static const int alpha = 255;
+  static const double alpha = 1.0;
   int r;
   int g;
   int b;
@@ -15,7 +15,6 @@ class Colour{
     g = rand.nextInt(256);
     b = rand.nextInt(256);
   }
-
 
   Colour(int r, int g, int b){
     this.r = r;
