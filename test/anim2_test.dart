@@ -85,11 +85,11 @@ void main() {
     });
   });
 
-group('AnimationGroup Tests', () {
+  group('AnimationGroup Tests', () {
     test('Test basic', () {
       int framesToRun = 10;
       V2 expectedPosition = new V2.both(10);
-      Colour expectedColour = new Colour(100,100,100,1.0);
+      Colour expectedColour = new Colour(100, 100, 100, 1.0);
       Controller controller = new Controller.Manual(null);
       var o = new TestAnimationObject();
       controller.registerObject(o);
@@ -97,7 +97,8 @@ group('AnimationGroup Tests', () {
       // Create an animation group
       AnimationGroup g = new AnimationGroup();
       AnimationBase a1 = controller.moveTo(o.id, new V2.both(10), framesToRun);
-      AnimationBase a2 = controller.changeColourTo(o.id, new Colour(100,100,100,1.0), framesToRun);
+      AnimationBase a2 = controller.changeColourTo(
+          o.id, new Colour(100, 100, 100, 1.0), framesToRun);
       // Add animations
       g.add(a1);
       g.add(a2);
@@ -119,11 +120,11 @@ group('AnimationGroup Tests', () {
 
       // First change to this
       V2 intermediatePosition = new V2.both(10);
-      Colour intermediateColour = new Colour(10,10,10,1.0);
+      Colour intermediateColour = new Colour(10, 10, 10, 1.0);
 
       // Then this
       V2 expectedPosition = new V2.both(100);
-      Colour expectedColour = new Colour(100,100,100,1.0);
+      Colour expectedColour = new Colour(100, 100, 100, 1.0);
 
       Controller controller = new Controller.Manual(null);
       var o = new TestAnimationObject();
@@ -132,10 +133,13 @@ group('AnimationGroup Tests', () {
       // Create an animation group
       AnimationGroup g1 = new AnimationGroup();
       AnimationGroup g2 = new AnimationGroup();
-      AnimationBase a1 = controller.moveTo(o.id, intermediatePosition, framesToRun);
-      AnimationBase a2 = controller.changeColourTo(o.id, intermediateColour, framesToRun);
+      AnimationBase a1 =
+          controller.moveTo(o.id, intermediatePosition, framesToRun);
+      AnimationBase a2 =
+          controller.changeColourTo(o.id, intermediateColour, framesToRun);
       AnimationBase a3 = controller.moveTo(o.id, expectedPosition, framesToRun);
-      AnimationBase a4 = controller.changeColourTo(o.id, expectedColour, framesToRun);
+      AnimationBase a4 =
+          controller.changeColourTo(o.id, expectedColour, framesToRun);
       // Add animations
       g1.add(a1);
       g1.add(a2);
@@ -154,13 +158,14 @@ group('AnimationGroup Tests', () {
       //TODO: alpha is 0.99999999999...
       expect(getTestObject(controller, 0).position == expectedPosition, isTrue);
     });
-
   });
 }
 
-void runFrames(Controller c, int framesToRun, {bool render: false, bool debug: false}) {
+void runFrames(Controller c, int framesToRun,
+    {bool render: false, bool debug: false}) {
   for (int i = 0; i < framesToRun; i++) {
-    if (debug) c.animations.forEach((a) => print("queued: ${a.queued},  ${a.description}"));
+    if (debug) c.animations
+        .forEach((a) => print("queued: ${a.queued},  ${a.description}"));
     c.update();
     if (render) c.render();
   }
