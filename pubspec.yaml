@@ -1,14 +1,14 @@
 name: anim2
 description: A basic 2D html5 animation library. Very basic.
 version: 1.0.0
-#author: Ben Sheron <benmosheron@gmail.com>
-#homepage: https://github.com/benmosheron/
+author: Ben Sheron <benmosheron@gmail.com>
+homepage: https://github.com/benmosheron/
 
 environment:
   sdk: '>=1.0.0 <2.0.0'
 
 dependencies:
-  generic_vector_tools: any
+  generic_vector_tools: '>=1.0.0 <1.1.0'
 
 dev_dependencies:
   test: '>=0.12.0 <0.13.0'
