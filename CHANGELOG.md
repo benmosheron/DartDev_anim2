@@ -7,3 +7,7 @@
 ## 1.0.0
 
 - Barebones implementation, arguably suitable for inclusion in barebones projects.
+
+## 1.0.1
+
+- TODO: Queueable animation groups

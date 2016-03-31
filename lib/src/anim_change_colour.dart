@@ -3,7 +3,6 @@ library anim2.anim_change_colour;
 import 'package:generic_vector_tools/generic_vector_tools.dart';
 
 import 'animation_base.dart';
-import 'anim_object.dart';
 import 'colour.dart';
 import 'colour_object.dart';
 
@@ -41,10 +40,6 @@ class AnimChangeColour implements AnimationBase {
     frameDuration = frames;
     V<double> srgb = new V<double>(startColour.array());
     V<double> ergb = new V<double>(endColour.array());
-    var x = ergb - srgb;
-    var y = (ergb - srgb) / frameDuration;
-    var z = ((ergb - srgb) / frameDuration).elements;
-    var zz = new Colour.fromArray(((ergb - srgb) / frameDuration).elements);
     _dColour = new Colour.fromArray(((ergb - srgb) / frameDuration).elements);
   }
 

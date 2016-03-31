@@ -4,8 +4,6 @@ import 'package:generic_vector_tools/generic_vector_tools.dart';
 
 import 'animation_base.dart';
 import 'anim_object.dart';
-import 'colour.dart';
-import 'colour_object.dart';
 
 /// Represents an animation of an AnimObject moving to a new location.
 class AnimMoveTo implements AnimationBase {
