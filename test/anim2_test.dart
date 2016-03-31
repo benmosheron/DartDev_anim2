@@ -59,11 +59,59 @@ void main() {
           o.id, new Colour(10, 10, 10, 1.0), framesToRun));
       runFrames(controller, framesToRun);
       Colour endColour = (getTestObject(controller, 0) as ColourObject).colour;
-      print(endColour);
       expect(endColour.r == 10, isTrue);
       expect(endColour.g == 10, isTrue);
       expect(endColour.b == 10, isTrue);
       //TODO: alpha is 0.99999999999...
+    });
+
+    test('Test created but not run', () {
+      int framesToRun = 10;
+      V2 expectedPosition = new V2.both(00);
+      Controller controller = new Controller.Manual(null);
+      var o = new TestAnimationObject();
+      controller.registerObject(o);
+      // Create animations using the controller, but do not queue or compound them
+      controller.changeColourTo(o.id, new Colour(10, 10, 10, 1.0), framesToRun);
+      controller.moveTo(o.id, new V2.both(10), framesToRun);
+
+      // run frames (should not do anything)
+      runFrames(controller, framesToRun);
+      Colour endColour = (getTestObject(controller, 0) as ColourObject).colour;
+      expect(endColour.r == 0, isTrue);
+      expect(endColour.g == 0, isTrue);
+      expect(endColour.b == 0, isTrue);
+      expect(getTestObject(controller, 0).position == expectedPosition, isTrue);
+    });
+  });
+
+group('AnimationGroup Tests', () {
+    test('Test basic', () {
+      int framesToRun = 10;
+      V2 expectedPosition = new V2.both(10);
+      Colour expectedColour = new Colour(100,100,100,1.0);
+      Controller controller = new Controller.Manual(null);
+      var o = new TestAnimationObject();
+      controller.registerObject(o);
+
+      // Create an animation group
+      AnimationGroup g = new AnimationGroup();
+      AnimationBase a1 = controller.moveTo(o.id, new V2.both(10), framesToRun);
+      AnimationBase a2 = controller.changeColourTo(o.id, new Colour(100,100,100,1.0), framesToRun);
+      // Add animations
+      g.add(a1);
+      g.add(a2);
+      // Queue the animations
+      controller.queueAnimation(g);
+
+      runFrames(controller, framesToRun, render: true);
+
+      Colour endColour = (getTestObject(controller, 0) as ColourObject).colour;
+      expect(endColour.r == expectedColour.r, isTrue);
+      expect(endColour.g == expectedColour.g, isTrue);
+      expect(endColour.b == expectedColour.b, isTrue);
+      //TODO: alpha is 0.99999999999...
+      expect(getTestObject(controller, 0).position == expectedPosition, isTrue);
     });
   });
 }
