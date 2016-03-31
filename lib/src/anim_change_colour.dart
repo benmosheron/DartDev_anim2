@@ -45,6 +45,15 @@ class AnimChangeColour implements AnimationBase {
 
   deQueue() {
     queued = false;
+    resetFromCurrent();
+  }
+
+  /// Reset the movement vector based on the target's position as it leaves the queue.
+  resetFromCurrent(){
+    startColour = target.colour;
+    V<double> srgb = new V<double>(startColour.array());
+    V<double> ergb = new V<double>(endColour.array());
+    _dColour = new Colour.fromArray(((ergb - srgb) / frameDuration).elements);
   }
 
   void run() {

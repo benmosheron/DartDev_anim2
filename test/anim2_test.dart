@@ -104,7 +104,7 @@ group('AnimationGroup Tests', () {
       // Queue the animations
       controller.queueAnimation(g);
 
-      runFrames(controller, framesToRun, render: true);
+      runFrames(controller, framesToRun);
 
       Colour endColour = (getTestObject(controller, 0) as ColourObject).colour;
       expect(endColour.r == expectedColour.r, isTrue);
@@ -113,11 +113,54 @@ group('AnimationGroup Tests', () {
       //TODO: alpha is 0.99999999999...
       expect(getTestObject(controller, 0).position == expectedPosition, isTrue);
     });
+
+    test('Test two queued groups', () {
+      int framesToRun = 10;
+
+      // First change to this
+      V2 intermediatePosition = new V2.both(10);
+      Colour intermediateColour = new Colour(10,10,10,1.0);
+
+      // Then this
+      V2 expectedPosition = new V2.both(100);
+      Colour expectedColour = new Colour(100,100,100,1.0);
+
+      Controller controller = new Controller.Manual(null);
+      var o = new TestAnimationObject();
+      controller.registerObject(o);
+
+      // Create an animation group
+      AnimationGroup g1 = new AnimationGroup();
+      AnimationGroup g2 = new AnimationGroup();
+      AnimationBase a1 = controller.moveTo(o.id, intermediatePosition, framesToRun);
+      AnimationBase a2 = controller.changeColourTo(o.id, intermediateColour, framesToRun);
+      AnimationBase a3 = controller.moveTo(o.id, expectedPosition, framesToRun);
+      AnimationBase a4 = controller.changeColourTo(o.id, expectedColour, framesToRun);
+      // Add animations
+      g1.add(a1);
+      g1.add(a2);
+      g2.add(a3);
+      g2.add(a4);
+      // Queue the animations
+      controller.queueAnimation(g1);
+      controller.queueAnimation(g2);
+
+      runFrames(controller, framesToRun * 2);
+
+      Colour endColour = (getTestObject(controller, 0) as ColourObject).colour;
+      expect(endColour.r == expectedColour.r, isTrue);
+      expect(endColour.g == expectedColour.g, isTrue);
+      expect(endColour.b == expectedColour.b, isTrue);
+      //TODO: alpha is 0.99999999999...
+      expect(getTestObject(controller, 0).position == expectedPosition, isTrue);
+    });
+
   });
 }
 
-void runFrames(Controller c, int framesToRun, {bool render: false}) {
+void runFrames(Controller c, int framesToRun, {bool render: false, bool debug: false}) {
   for (int i = 0; i < framesToRun; i++) {
+    if (debug) c.animations.forEach((a) => print("queued: ${a.queued},  ${a.description}"));
     c.update();
     if (render) c.render();
   }

@@ -129,6 +129,7 @@ class Controller {
   /// Start an animation immediately, compounded with any existing animations of the target object
   compoundAnimation(AnimationBase animation) {
     if (animation == null) return;
+    animation.queued = false;
     animations.add(animation);
   }
 

@@ -26,7 +26,7 @@ class AnimationGroup implements AnimationBase{
 
     // queue the animation
     a.queued = true;
-print("meow");
+
     animations.add(a);
     if(target == null) target = a.target;
     if(frameDuration == null) frameDuration = a.frameDuration;
@@ -65,5 +65,8 @@ print("meow");
   }
 
   /// Run a single frame of the animation.
-  void run() => animations.forEach((a) => a.run());
+  void run() {
+    animations.forEach((a) => a.run());
+    currentFrame++;
+  }
 }

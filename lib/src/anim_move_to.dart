@@ -45,6 +45,7 @@ class AnimMoveTo implements AnimationBase {
     resetFromCurrent();
   }
 
+  /// Reset the movement vector based on the target's position as it leaves the queue
   resetFromCurrent() {
     startPosition = target.position;
     _d = (endPosition - startPosition) / frameDuration;
