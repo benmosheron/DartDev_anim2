@@ -48,9 +48,9 @@ class Controller {
   }
 
   /// Create the controller, without starting a timer.
-  Controller.Manual(this.canvas) { 
+  Controller.Manual(this.canvas) {
     ctx = null;
-   }
+  }
 
   //---------//
   // Methods //
@@ -71,8 +71,7 @@ class Controller {
 
   /// Render all objects
   render() {
-    if(ctx != null)
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (ctx != null) ctx.clearRect(0, 0, canvas.width, canvas.height);
     objects.forEach((k, a) => a.render(ctx));
   }
 

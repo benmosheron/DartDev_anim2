@@ -32,7 +32,8 @@ void main() {
       Controller controller = new Controller.Manual(null);
       var o = new TestAnimationObject();
       controller.registerObject(o);
-      controller.queueAnimation(controller.moveTo(o.id, new V2.both(10), framesToRun));
+      controller.queueAnimation(
+          controller.moveTo(o.id, new V2.both(10), framesToRun));
     });
   });
 
@@ -43,7 +44,8 @@ void main() {
       Controller controller = new Controller.Manual(null);
       var o = new TestAnimationObject();
       controller.registerObject(o);
-      controller.queueAnimation(controller.moveTo(o.id, new V2.both(10), framesToRun));
+      controller.queueAnimation(
+          controller.moveTo(o.id, new V2.both(10), framesToRun));
       runFrames(controller, framesToRun);
       expect(getTestObject(controller, 0).position == expectedPosition, isTrue);
     });
@@ -53,7 +55,8 @@ void main() {
       Controller controller = new Controller.Manual(null);
       var o = new TestAnimationObject();
       controller.registerObject(o);
-      controller.queueAnimation(controller.changeColourTo(o.id, new Colour(10,10,10,1.0), framesToRun));
+      controller.queueAnimation(controller.changeColourTo(
+          o.id, new Colour(10, 10, 10, 1.0), framesToRun));
       runFrames(controller, framesToRun);
       Colour endColour = (getTestObject(controller, 0) as ColourObject).colour;
       print(endColour);
@@ -65,17 +68,17 @@ void main() {
   });
 }
 
-void runFrames(Controller c, int framesToRun, {bool render: false}){
-  for(int i=0; i<framesToRun;i++){
+void runFrames(Controller c, int framesToRun, {bool render: false}) {
+  for (int i = 0; i < framesToRun; i++) {
     c.update();
-    if(render) c.render();
+    if (render) c.render();
   }
 }
 
-String getTestObjectId(Controller c, int i){
+String getTestObjectId(Controller c, int i) {
   return c.objects[c.objects.keys.elementAt(i)].id;
 }
 
-AnimObject getTestObject(Controller c, int i){
+AnimObject getTestObject(Controller c, int i) {
   return c.objects[c.objects.keys.elementAt(i)];
 }
