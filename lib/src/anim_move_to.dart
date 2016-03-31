@@ -8,7 +8,7 @@ import 'colour.dart';
 import 'colour_object.dart';
 
 /// Represents an animation of an AnimObject moving to a new location.
-class AnimMoveTo implements AnimationBase{
+class AnimMoveTo implements AnimationBase {
   // Note: shortened name prevents clash with html Animation class.
   AnimObject target;
   int frameDuration;
@@ -28,11 +28,11 @@ class AnimMoveTo implements AnimationBase{
   /// True if animation is currently running
   bool get active => !(finished || queued);
 
-  String get description => "Moving ${target.id} ($currentFrame / $frameDuration)";
+  String get description =>
+      "Moving ${target.id} ($currentFrame / $frameDuration)";
 
-  AnimMoveTo(AnimObject target, V2 p, int frames){
-    if(frames <= 0)
-      frames = 1;
+  AnimMoveTo(AnimObject target, V2 p, int frames) {
+    if (frames <= 0) frames = 1;
 
     this.target = target;
     startPosition = target.position;
@@ -42,21 +42,20 @@ class AnimMoveTo implements AnimationBase{
     _d = (endPosition - startPosition) / frameDuration;
   }
 
-  deQueue(){
+  deQueue() {
     queued = false;
     resetFromCurrent();
   }
 
-  resetFromCurrent(){
+  resetFromCurrent() {
     startPosition = target.position;
     _d = (endPosition - startPosition) / frameDuration;
   }
 
-  void run(){
-    if(finished)
-      return;
+  void run() {
+    if (finished) return;
 
-    target.position += _d;    
+    target.position += _d;
 
     currentFrame++;
   }

@@ -1,20 +1,24 @@
-import 'dart:html';
-
 import 'package:anim2/anim2.dart';
 import 'package:generic_vector_tools/generic_vector_tools.dart';
 
-class TestAnimationObject implements AnimObject{
+class TestAnimationObject implements ColourObject {
   String id;
   V2 position;
+  Colour colour;
 
   static int testIdGen = -1;
 
-  void render(CanvasRenderingContext2D ctx){
-    // Test class, do nothing
+  void render(ctx) {
+    print("\"rendering\" object:");
+    print("  id: $id");
+    print("  position: (${position.x}, ${position.y})");
+    print("  colour: ${colour}");
+    print("");
   }
 
-  TestAnimationObject(){
+  TestAnimationObject() {
     id = (++testIdGen).toString();
     position = new V2.zero();
+    colour = new Colour(0, 0, 0, 0);
   }
 }

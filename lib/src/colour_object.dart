@@ -1,14 +1,12 @@
 library anim2.colour_object;
 
-import 'dart:html';
-
 import 'package:generic_vector_tools/generic_vector_tools.dart';
 
 import 'anim_object.dart';
 import 'colour.dart';
 
 /// Animatable object, with a modifiable colour
-abstract class ColourObject implements AnimObject{
+abstract class ColourObject implements AnimObject {
   /// Unique ID of the object
   String id;
 
@@ -16,7 +14,7 @@ abstract class ColourObject implements AnimObject{
   V2 position;
 
   /// Render the object to canvas
-  void render(CanvasRenderingContext2D ctx);
+  void render(var ctx);
 
   /// RGBA Colour of the object
   Colour colour;

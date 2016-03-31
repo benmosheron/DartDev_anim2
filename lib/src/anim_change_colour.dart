@@ -8,14 +8,14 @@ import 'colour.dart';
 import 'colour_object.dart';
 
 /// Represents an animation of an AnimObject changing colour.
-class AnimChangeColour implements AnimationBase{
+class AnimChangeColour implements AnimationBase {
   // Note: shortened name prevents clash with html Animation class.
   ColourObject target;
   int frameDuration;
 
   Colour startColour;
   Colour endColour;
-  V<double> _dColour;
+  Colour _dColour;
 
   /// Current animation frame
   int currentFrame = 0;
@@ -29,33 +29,33 @@ class AnimChangeColour implements AnimationBase{
   /// True if animation is currently running
   bool get active => !(finished || queued);
 
-  String get description => "Changing colour of ${target.id} from ${startColour.toString()} to ${endColour.toString()} ($currentFrame / $frameDuration)";
+  String get description =>
+      "Changing colour of ${target.id} from ${startColour.toString()} to ${endColour.toString()} ($currentFrame / $frameDuration)";
 
-  AnimChangeColour(ColourObject target, Colour c, int frames){
-    if(frames <= 0)
-      frames = 1;
+  AnimChangeColour(ColourObject target, Colour c, int frames) {
+    if (frames <= 0) frames = 1;
 
     this.target = target;
     startColour = target.colour;
     endColour = c;
     frameDuration = frames;
-    V<double> srgb = new V<double>([startColour.r.toDouble(), startColour.g.toDouble(), startColour.b.toDouble()]);
-    V<double> ergb = new V<double>([endColour.r.toDouble(), endColour.g.toDouble(), endColour.b.toDouble()]);
-
-    _dColour = (ergb - srgb) / frameDuration;
+    V<double> srgb = new V<double>(startColour.array());
+    V<double> ergb = new V<double>(endColour.array());
+    var x = ergb - srgb;
+    var y = (ergb - srgb) / frameDuration;
+    var z = ((ergb - srgb) / frameDuration).elements;
+    var zz = new Colour.fromArray(((ergb - srgb) / frameDuration).elements);
+    _dColour = new Colour.fromArray(((ergb - srgb) / frameDuration).elements);
   }
 
-  deQueue(){
+  deQueue() {
     queued = false;
   }
 
-  void run(){
-    if(finished)
-      return;
+  void run() {
+    if (finished) return;
 
-    target.colour.r += _dColour[0].round();
-    target.colour.g += _dColour[1].round();
-    target.colour.b += _dColour[2].round();
+    target.colour = target.colour + _dColour.array();
 
     currentFrame++;
   }
