@@ -10,4 +10,8 @@
 
 ## 1.0.1
 
-- TODO: Queueable animation groups
+- Queueable animation groups
+
+## 1.0.2
+
+- dart2js freindliness
