@@ -18,4 +18,4 @@
 
 ## 1.0.3
 
-- unit tests in checked mode
+- unit tests pass in checked mode
