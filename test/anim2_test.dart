@@ -96,7 +96,8 @@ void main() {
 
       // Create an animation group
       AnimationGroup g = new AnimationGroup();
-      AnimationBase a1 = controller.moveTo(o.id, new V2.both(10.0), framesToRun);
+      AnimationBase a1 =
+          controller.moveTo(o.id, new V2.both(10.0), framesToRun);
       AnimationBase a2 = controller.changeColourTo(
           o.id, new Colour(100, 100, 100, 1.0), framesToRun);
       // Add animations
