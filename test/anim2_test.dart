@@ -33,19 +33,19 @@ void main() {
       var o = new TestAnimationObject();
       controller.registerObject(o);
       controller.queueAnimation(
-          controller.moveTo(o.id, new V2.both(10), framesToRun));
+          controller.moveTo(o.id, new V2.both(10.0), framesToRun));
     });
   });
 
   group('Animation Tests', () {
     test('Test moveTo', () {
-      V2 expectedPosition = new V2.both(10);
+      V2 expectedPosition = new V2.both(10.0);
       int framesToRun = 10;
       Controller controller = new Controller.Manual(null);
       var o = new TestAnimationObject();
       controller.registerObject(o);
       controller.queueAnimation(
-          controller.moveTo(o.id, new V2.both(10), framesToRun));
+          controller.moveTo(o.id, new V2.both(10.0), framesToRun));
       runFrames(controller, framesToRun);
       expect(getTestObject(controller, 0).position == expectedPosition, isTrue);
     });
@@ -67,13 +67,13 @@ void main() {
 
     test('Test created but not run', () {
       int framesToRun = 10;
-      V2 expectedPosition = new V2.both(00);
+      V2 expectedPosition = new V2.both(0.0);
       Controller controller = new Controller.Manual(null);
       var o = new TestAnimationObject();
       controller.registerObject(o);
       // Create animations using the controller, but do not queue or compound them
       controller.changeColourTo(o.id, new Colour(10, 10, 10, 1.0), framesToRun);
-      controller.moveTo(o.id, new V2.both(10), framesToRun);
+      controller.moveTo(o.id, new V2.both(10.0), framesToRun);
 
       // run frames (should not do anything)
       runFrames(controller, framesToRun);
@@ -88,7 +88,7 @@ void main() {
   group('AnimationGroup Tests', () {
     test('Test basic', () {
       int framesToRun = 10;
-      V2 expectedPosition = new V2.both(10);
+      V2 expectedPosition = new V2.both(10.0);
       Colour expectedColour = new Colour(100, 100, 100, 1.0);
       Controller controller = new Controller.Manual(null);
       var o = new TestAnimationObject();
@@ -96,7 +96,7 @@ void main() {
 
       // Create an animation group
       AnimationGroup g = new AnimationGroup();
-      AnimationBase a1 = controller.moveTo(o.id, new V2.both(10), framesToRun);
+      AnimationBase a1 = controller.moveTo(o.id, new V2.both(10.0), framesToRun);
       AnimationBase a2 = controller.changeColourTo(
           o.id, new Colour(100, 100, 100, 1.0), framesToRun);
       // Add animations
@@ -119,11 +119,11 @@ void main() {
       int framesToRun = 10;
 
       // First change to this
-      V2 intermediatePosition = new V2.both(10);
+      V2 intermediatePosition = new V2.both(10.0);
       Colour intermediateColour = new Colour(10, 10, 10, 1.0);
 
       // Then this
-      V2 expectedPosition = new V2.both(100);
+      V2 expectedPosition = new V2.both(100.0);
       Colour expectedColour = new Colour(100, 100, 100, 1.0);
 
       Controller controller = new Controller.Manual(null);

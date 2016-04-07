@@ -35,7 +35,7 @@ class Controller {
 
   /// Animations currently running
   List<AnimationBase> get activeAnimations =>
-      animations.where((anim) => anim.active);
+      animations.where((anim) => anim.active).toList();
 
   //--------------//
   // Constructors //

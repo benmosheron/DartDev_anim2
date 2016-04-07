@@ -40,7 +40,7 @@ class AnimChangeColour implements AnimationBase {
     frameDuration = frames;
     V<double> srgb = new V<double>(startColour.array());
     V<double> ergb = new V<double>(endColour.array());
-    _dColour = new Colour.fromArray(((ergb - srgb) / frameDuration).elements);
+    _dColour = new Colour.fromArray(((ergb - srgb) / frameDuration.toDouble()).elements);
   }
 
   deQueue() {
@@ -53,7 +53,7 @@ class AnimChangeColour implements AnimationBase {
     startColour = target.colour;
     V<double> srgb = new V<double>(startColour.array());
     V<double> ergb = new V<double>(endColour.array());
-    _dColour = new Colour.fromArray(((ergb - srgb) / frameDuration).elements);
+    _dColour = new Colour.fromArray(((ergb - srgb) / frameDuration.toDouble()).elements);
   }
 
   void run() {

@@ -15,3 +15,7 @@
 ## 1.0.2
 
 - dart2js freindliness
+
+## 1.0.3
+
+- unit tests in checked mode

@@ -37,7 +37,7 @@ class AnimMoveTo implements AnimationBase {
     endPosition = p;
     frameDuration = frames;
 
-    _d = (endPosition - startPosition) / frameDuration;
+    _d = (endPosition - startPosition) / frameDuration.toDouble();
   }
 
   deQueue() {
@@ -48,7 +48,7 @@ class AnimMoveTo implements AnimationBase {
   /// Reset the movement vector based on the target's position as it leaves the queue
   resetFromCurrent() {
     startPosition = target.position;
-    _d = (endPosition - startPosition) / frameDuration;
+    _d = (endPosition - startPosition) / frameDuration.toDouble();
   }
 
   void run() {
