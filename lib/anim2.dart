@@ -7,6 +7,7 @@
 library anim2;
 
 export 'src/anim_change_colour.dart';
+export 'src/anim_move_at.dart';
 export 'src/anim_move_to.dart';
 export 'src/anim_object.dart';
 export 'src/animation_base.dart';

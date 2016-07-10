@@ -160,6 +160,26 @@ void main() {
       expect(getTestObject(controller, 0).position == expectedPosition, isTrue);
     });
   });
+
+  group('AnimMoveAt Tests', () {
+    test('Test basic acceleration', () {
+      int framesToRun = 10;
+      V2 expectedPosition = new V2.both(45.0);
+      Controller controller = new Controller.Manual(null);
+      var o = new TestAnimationObject();
+      controller.registerObject(o);
+
+      // Create an animation
+      AnimationBase a = new AnimMoveAt(o, framesToRun, (frame) => new V2.both(frame.toDouble()));
+
+      // Queue the animations
+      controller.queueAnimation(a);
+
+      runFrames(controller, framesToRun);
+
+      expect(getTestObject(controller, 0).position == expectedPosition, isTrue);
+    });
+  });
 }
 
 void runFrames(Controller c, int framesToRun,
