@@ -2,7 +2,7 @@
 
 ## 0.0.1
 
-- Initial version, created by Stagehand
+- Initial version, created by Stagehand.
 
 ## 1.0.0
 
@@ -10,7 +10,7 @@
 
 ## 1.0.1
 
-- Queueable animation groups
+- Queueable animation groups.
 
 ## 1.0.2
 
@@ -18,4 +18,11 @@
 
 ## 1.0.3
 
-- unit tests pass in checked mode
+- Unit tests pass in checked mode.
+
+## 1.0.4
+
+- Added some animations support custom velocity functions.
+- Added AnimMoveAt to move an object at an input velocity function (function of animation frame).
+- Added AnimChangeScale to change the scale of an object.
+- Added ScaleObject abstract class for objects which can have their scale changed.

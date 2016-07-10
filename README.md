@@ -4,7 +4,8 @@ A basic 2D html5 animation library. Very basic.
 
 ## Usage
 
-A simple usage example (see example\anim2_example.dart):
+A simple usage example (see example\anim2_example.dart for the Circle implementation):
+```
     import 'dart:html';
     import 'dart:math';
 
@@ -27,7 +28,7 @@ A simple usage example (see example\anim2_example.dart):
       controller.compoundAnimation(controller.changeColourTo("testCircle", new Colour.random(), 30));
       controller.compoundAnimation(controller.moveTo("testCircle", clickPosition, 30));
     }
-
+```
 ## Features and bugs
 
 Please file feature requests and bugs at the [issue tracker][tracker].

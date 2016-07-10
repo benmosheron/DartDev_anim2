@@ -15,6 +15,7 @@ class TestAnimationObject implements ColourObject, ScaleObject {
     print("  id: $id");
     print("  position: (${position.x}, ${position.y})");
     print("  colour: ${colour}");
+    print("  scale: $scale");
     print("");
   }
 

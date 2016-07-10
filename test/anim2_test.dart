@@ -180,10 +180,78 @@ void main() {
       expect(getTestObject(controller, 0).position == expectedPosition, isTrue);
     });
   });
+
+  group('AnimChangeScale Tests', () {
+    test('Test basic', () {
+      int framesToRun = 10;
+      double expectedScale = 21.0;
+      Controller controller = new Controller.Manual(null);
+      ScaleObject o = new TestAnimationObject();
+      controller.registerObject(o);
+
+      // Create an animation
+      AnimationBase a = new AnimChangeScale(o, expectedScale, framesToRun);
+
+      // Queue the animations
+      controller.queueAnimation(a);
+
+      runFrames(controller, framesToRun);
+
+      expect((getTestObject(controller, 0) as ScaleObject).scale == expectedScale, isTrue);
+    });
+
+    test('Test scaleFunction is recalculated on deQueue', () {
+      int framesToRun = 1; // just one frame!
+      double expectedScale = 21.0;
+      Controller controller = new Controller.Manual(null);
+      ScaleObject o = new TestAnimationObject();
+      controller.registerObject(o);
+
+      // Create an animation
+      // At this point the scale function will be (frame) => endscale - startscale
+      AnimationBase a = new AnimChangeScale(o, expectedScale, framesToRun);
+      expect((a as AnimChangeScale).scaleFunction(0) == 20.0, isTrue);
+
+      // Change the scale of the object before it is deQueued
+      o.scale = 20.0;
+
+      // scaleFunction has not changed yet
+      expect((a as AnimChangeScale).scaleFunction(0) == 20.0, isTrue);
+
+      // Queue the animations (deQueue is not called quite yet)
+      controller.queueAnimation(a);
+
+      runFrames(controller, framesToRun);
+
+      // scaleFunction should have been recalculated
+      print((a as AnimChangeScale).scaleFunction(0));
+      expect((a as AnimChangeScale).scaleFunction(0) == 1.0, isTrue);
+
+      expect((getTestObject(controller, 0) as ScaleObject).scale == expectedScale, isTrue);
+    });
+
+    test('Test custom scaleFunction', () {
+      int framesToRun = 10;
+      double expectedScale = 286.0; //1 + sum(from i = 0 to 9) i^2
+      Controller controller = new Controller.Manual(null);
+      ScaleObject o = new TestAnimationObject();
+      controller.registerObject(o);
+
+      // Create an animation (quadratic scale increase (linear derivative))
+      AnimationBase a = new AnimChangeScale.CustomFunction(o, framesToRun, (frame) => (frame * frame).toDouble() );
+
+      // Queue the animations
+      controller.queueAnimation(a);
+
+      runFrames(controller, framesToRun);
+
+      expect((getTestObject(controller, 0) as ScaleObject).scale == expectedScale, isTrue);
+    });
+  });
 }
 
 void runFrames(Controller c, int framesToRun,
-    {bool render: false, bool debug: false}) {
+    {bool render: true, bool debug: false}) {
   for (int i = 0; i < framesToRun; i++) {
     if (debug) c.animations
         .forEach((a) => print("queued: ${a.queued},  ${a.description}"));
