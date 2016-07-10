@@ -25,7 +25,7 @@ abstract class AnimationBase {
   /// Get a description of the animation (for debugging)
   String get description;
 
-  /// Remove the animation from it's queue, so it can run.
+  /// Remove the animation from its queue, so it can run.
   void deQueue();
 
   /// Run a single frame of the animation.

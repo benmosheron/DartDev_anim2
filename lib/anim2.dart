@@ -14,3 +14,4 @@ export 'src/animation_group.dart';
 export 'src/colour.dart';
 export 'src/colour_object.dart';
 export 'src/controller.dart';
+export 'src/scale_object.dart';

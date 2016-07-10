@@ -60,7 +60,7 @@ class AnimationGroup implements AnimationBase {
   String get description =>
       "Group of ${animations.length} animations for ${target.id} ($currentFrame / $frameDuration)";
 
-  /// Remove the animation from it's queue, so it can run.
+  /// Remove the animation from its queue, so it can run.
   void deQueue() {
     animations.forEach((a) => a.deQueue());
     queued = false;
