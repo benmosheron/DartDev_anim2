@@ -78,7 +78,22 @@ class AnimChangeScale implements AnimationBase {
   void run() {
     if (finished) return;
 
-    target.scale += scaleFunction(currentFrame);
+    // Difference between new scale and old scale
+    double scaleDelta = scaleFunction(currentFrame);
+
+    // Ratio between new scale and old scale
+    double s = (target.scale + scaleDelta) / target.scale;
+
+    // With
+    // P = existing position
+    // F = focus
+    // PN = new position
+    // PN = sP + (1-s)F
+    V2 newPosition = (target.position * s) + (target.focus * (1.0 - s));
+
+    // Update values
+    target.scale += scaleDelta;
+    target.position = newPosition;
 
     currentFrame++;
   }

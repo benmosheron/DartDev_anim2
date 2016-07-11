@@ -3,6 +3,8 @@
 
 library anim2.test;
 
+import 'dart:math' as math;
+
 import 'package:anim2/anim2.dart';
 import 'package:generic_vector_tools/generic_vector_tools.dart';
 import 'package:test/test.dart';
@@ -247,11 +249,60 @@ void main() {
 
       expect((getTestObject(controller, 0) as ScaleObject).scale == expectedScale, isTrue);
     });
+
+    test('Test position does not change if focus = position', () {
+      int framesToRun = 10;
+
+      Controller controller = new Controller.Manual(null);
+      ScaleObject o = new TestAnimationObject();
+      o.focus = o.position;
+      V2 expectedPosition = new V2(o.position.x, o.position.y);
+      controller.registerObject(o);
+
+      // Create an animation (quadratic scale increase (linear derivative))
+      AnimationBase a = new AnimChangeScale.CustomFunction(o, framesToRun, (frame) => (frame * frame).toDouble() );
+
+      // Queue the animations
+      controller.queueAnimation(a);
+
+      runFrames(controller, framesToRun);
+
+      expect((getTestObject(controller, 0) as ScaleObject).position == expectedPosition, isTrue);
+    });
+
+    test('Test position does change relative to focus (postion != focus)', () {
+      int framesToRun = 10;
+
+      Controller controller = new Controller.Manual(null);
+      ScaleObject o = new TestAnimationObject();
+
+      // from testobject:
+      // position = (0,0)
+      // focus = (-1,-1)
+
+      // We expect the final scale to be 286.0
+      // so the final scaled position will be (285.0, 285.0)
+      V2 expectedPosition = new V2.both(285.0);
+      controller.registerObject(o);
+
+      // Create an animation (quadratic scale increase (linear derivative))
+      AnimationBase a = new AnimChangeScale.CustomFunction(o, framesToRun, (frame) => (frame * frame).toDouble() );
+
+      // Queue the animations
+      controller.queueAnimation(a);
+
+      runFrames(controller, framesToRun);
+
+      // Floating point limitations require us to round the result (or check for 284.9999...)
+      var roundedPosition = new V2(o.position.x.round().toDouble(), o.position.y.round().toDouble());
+      o.position = roundedPosition;
+      expect(roundedPosition == expectedPosition, isTrue);
+    });
   });
 }
 
 void runFrames(Controller c, int framesToRun,
-    {bool render: true, bool debug: false}) {
+    {bool render: false, bool debug: false}) {
   for (int i = 0; i < framesToRun; i++) {
     if (debug) c.animations
         .forEach((a) => print("queued: ${a.queued},  ${a.description}"));
