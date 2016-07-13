@@ -7,6 +7,8 @@ import 'package:generic_vector_tools/generic_vector_tools.dart';
 
 import 'anim_object.dart';
 import 'animation_base.dart';
+import 'anim_change_scale.dart';
+import 'anim_move_at.dart';
 import 'anim_move_to.dart';
 import 'anim_change_colour.dart';
 import 'colour.dart';
@@ -80,11 +82,40 @@ class Controller {
     objects[o.id] = o;
   }
 
-  /// Create an animation that will, when run, move an object to the specified position, in the specified number of frames
+  /// Create an animation that will, when run, move an object to the specified
+  /// position, in the specified number of frames
   AnimMoveTo moveTo(String id, V2 position, int frames) {
     AnimObject o = objects[id];
     if (o == null) return null;
     return new AnimMoveTo(o, position, frames);
+  }
+
+  /// Create an animation that will, when run, move an object at velocity
+  /// velocityFunction(currentFrame) for the specified number of frames.
+  AnimMoveAt moveAt(String id, int frames, Function velocityFunction){
+    AnimObject o = objects[id];
+    if (o == null) return null;
+    return new AnimMoveAt(o, frames, velocityFunction);
+  }
+
+  /// Create an animation that will, when run, change the scale of an object to
+  /// the specified position, in the specified number of frames
+  AnimChangeScale changeScale(String id, double endScale, int frames){
+    AnimObject o = objects[id];
+    if (o == null) return null;
+    return new AnimChangeScale(o, endScale, frames);
+  }
+
+  /// Create an animation that will, when run, change the scale of an object to
+  /// the specified position, with a custom function specifying
+  /// the rate of change of scale with respect to the current animation frame
+  AnimChangeScale changeScaleCustomFunction(
+      String id,
+      int frames,
+      Function scaleFunction){
+    AnimObject o = objects[id];
+    if (o == null) return null;
+    return new AnimChangeScale.CustomFunction(o, frames, scaleFunction);
   }
 
   /// Create an animation that will, when run, change an object's colour to the input colour, in the specified number of frames
